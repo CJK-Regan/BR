@@ -1,0 +1,25 @@
+{
+	"manifest_version": 2,
+
+	"name": "BR extension",
+	"version": "1.0",
+	"description": "BR quick action",
+	"icons": {"128": "br.png"},
+	
+	"page_action": {
+		"default_icon": "br.png",
+		"default_title": "BR quick action"
+	},
+	
+	"background": {"scripts": ["bg.js"]},
+	"permissions": ["tabs"],
+
+	"content_scripts": [
+		{
+			"matches": ["http://br.265g.com/game.php"],
+			"js": ["content.js"]
+		}
+	],
+
+	"web_accessible_resources": ["page.js"]
+}
