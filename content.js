@@ -1,4 +1,3 @@
-
 //content_script
 //including script insertion, view initialization and update function
 
@@ -9,8 +8,9 @@
 		var div = document.createElement("div");
 		div.id = "myDiv";
 
-		for (var i = 0; i < 8; i++)
+		for (var i = 0; i < 8; i++) {
 			div.appendChild(document.createElement("div"));
+		}
 		div.children[0].id = "myMain";
 		div.children[1].id = "myAttack";
 		div.children[2].id = "myPick";
@@ -20,6 +20,45 @@
 		div.children[6].id = "myShop";
 		div.children[7].id = "myBack";
 
+		//Main
+		var myMain = div.children[0];
+		for (var i = 0; i < 3; i++) {
+			myMain.appendChild(document.createElement("div"));
+		}
+		myMain.children[0].id = "myMove";
+		myMain.children[1].id = "myItems";
+		myMain.children[2].id = "myActions";
+
+		//Move
+
+		
+		//Items
+
+		
+		//Actions
+		
+		
+		//Attack
+		
+		
+		//Pick
+		
+		
+		//Corpse
+		
+		
+		//Heal
+		
+		
+		//Make
+		
+		
+		//Shop
+		
+		
+		//Back
+
+		
 		return div;
 	}
 
@@ -29,7 +68,7 @@
 	body.removeChild(body.children[4]);
 	document.getElementsByTagName("table")[5].style.width = "400px";
 	document.getElementById("chatmsg").style.width = "380px";
-	//form.style.display = "none";
+	form.style.display = "none";
 	form.parentElement.appendChild(constructDiv());
 })();
 
