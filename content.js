@@ -1,27 +1,20 @@
-//content_script
-//including script insertion, view initialization and update function
 
-//view initialization
+var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "myShop", "myBack"]
+
+//initialize div
 (function() {
-	//div construct
+	//construct div
 	function constructDiv() {
 		var div = document.createElement("div");
 		div.id = "myDiv";
 
-		for (var i = 0; i < 8; i++) {
+		for (var i = 0; i < divList.length; i++) {
 			div.appendChild(document.createElement("div"));
+			div.lastChild.id = divList[i];
 		}
-		div.children[0].id = "myMain";
-		div.children[1].id = "myAttack";
-		div.children[2].id = "myPick";
-		div.children[3].id = "myCorpse";
-		div.children[4].id = "myHeal";
-		div.children[5].id = "myMake";
-		div.children[6].id = "myShop";
-		div.children[7].id = "myBack";
 
 		//Main
-		var myMain = div.children[0];
+		var myMain = document.getElementById("myMain");
 		for (var i = 0; i < 3; i++) {
 			myMain.appendChild(document.createElement("div"));
 		}
@@ -62,14 +55,15 @@
 		return div;
 	}
 
+	//change DOM
 	var body = document.body;
 	var form = document.getElementById("cmd");
 
-	body.removeChild(body.children[4]);
 	document.getElementsByTagName("table")[5].style.width = "400px";
 	document.getElementById("chatmsg").style.width = "380px";
-	form.style.display = "none";
 	form.parentElement.appendChild(constructDiv());
+	body.removeChild(body.children[4]);
+	form.hidden = true;
 })();
 
 //insert js to DOM
