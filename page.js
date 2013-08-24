@@ -38,12 +38,25 @@ var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "
 		button.innerHTML = moveList[i];
 		button.onclick = function() {
 			myPost("mode=command&command=move&moveto=" + this.value);
-		}
+		};
 		myMove.appendChild(button);
 	}
 	
 	//Items
-
+	var myItems = $("myItems");
+	myItems.align = "center";
+	var title_items = document.createElement("p");
+	title_items.innerHTML = "物品";
+	myItems.appendChild(title_items);
+	for (var i = 1; i <= 5; i++) {
+		var button = document.createElement("button");
+		button.id = "item" + i;
+		button.value = i;
+		button.onclick = function() {
+			myPost("mode=command&command=itm" + this.value);
+		};
+		myItems.appendChild(button);
+	}
 	
 	//Actions
 	
