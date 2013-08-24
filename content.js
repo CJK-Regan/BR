@@ -1,6 +1,10 @@
 
 var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "myShop", "myBack"]
 
+function $(id) {
+	return document.getElementById(id);
+}
+
 //initialize div
 (function() {
 	//construct div
@@ -14,13 +18,12 @@ var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "
 		}
 
 		//Main
-		var myMain = document.getElementById("myMain");
 		for (var i = 0; i < 3; i++) {
-			myMain.appendChild(document.createElement("div"));
+			$("myMain").appendChild(document.createElement("div"));
 		}
-		myMain.children[0].id = "myMove";
-		myMain.children[1].id = "myItems";
-		myMain.children[2].id = "myActions";
+		$("myMain").children[0].id = "myMove";
+		$("myMain").children[1].id = "myItems";
+		$("myMain").children[2].id = "myActions";
 
 		//Move
 
@@ -56,14 +59,11 @@ var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "
 	}
 
 	//change DOM
-	var body = document.body;
-	var form = document.getElementById("cmd");
-
 	document.getElementsByTagName("table")[5].style.width = "400px";
-	document.getElementById("chatmsg").style.width = "380px";
-	form.parentElement.appendChild(constructDiv());
-	body.removeChild(body.children[4]);
-	form.hidden = true;
+	document.body.removeChild(document.body.children[4]);
+	$("cmd").parentElement.appendChild(constructDiv());
+	$("chatmsg").style.width = "380px";
+	$("cmd").hidden = true;
 })();
 
 //insert js to DOM
