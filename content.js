@@ -10,6 +10,7 @@ function $(id) {
 	//construct div
 	function constructDiv() {
 		var div = document.createElement("div");
+		$("cmd").parentElement.appendChild(div);
 		div.id = "myDiv";
 
 		for (var i = 0; i < divList.length; i++) {
@@ -20,6 +21,7 @@ function $(id) {
 		//Main
 		for (var i = 0; i < 3; i++) {
 			$("myMain").appendChild(document.createElement("div"));
+			$("myMain").lastChild.style.border = "1px solid";
 		}
 		$("myMain").children[0].id = "myMove";
 		$("myMain").children[1].id = "myItems";
@@ -54,16 +56,14 @@ function $(id) {
 		
 		//Back
 
-		
-		return div;
 	}
 
 	//change DOM
 	document.getElementsByTagName("table")[5].style.width = "400px";
 	document.body.removeChild(document.body.children[4]);
-	$("cmd").parentElement.appendChild(constructDiv());
 	$("chatmsg").style.width = "380px";
 	$("cmd").hidden = true;
+	constructDiv();
 })();
 
 //insert js to DOM
