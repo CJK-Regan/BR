@@ -1,8 +1,8 @@
 //change view
 (function() {
 	document.getElementsByTagName("table")[5].style.width = "400px";
-	document.body.removeChild(document.body.children[4]);
 	document.getElementById("chatmsg").style.width = "380px";
+	document.body.removeChild(document.body.lastElementChild);
 	document.getElementById("cmd").hidden = true;
 })();
 
