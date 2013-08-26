@@ -110,6 +110,13 @@ function createButton(name, command, id) {
 
 })();
 
+function showDiv(id) {
+	$(id).hidden = false;
+	for (var i = 0; i < divList.length; i++)
+		if (divList[i] != id)
+			$(divList[i]).hidden = true;
+}
+
 //div update function
 function update() {
 
@@ -132,6 +139,3 @@ function myPost(command) {
 
 	update();
 }
-
-//command constructor
-
