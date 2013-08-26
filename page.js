@@ -1,6 +1,16 @@
 
 var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "myShop", "myBack"];
 
+function createButton(name, command, id) {
+	var button = document.createElement("button");
+	button.innerHTML = name;
+	button.onclick = function() {
+		myPost(command);
+	};
+	button.id = id || null;
+	return button;
+}
+
 //initialize div
 (function() {
 	var div = document.createElement("div");
@@ -33,16 +43,8 @@ var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "
 		"西村神社", "墓地", "山丘地带", "隧道", "西村住宅区", "寺庙", "废校", 
 		"南村神社", "森林地带", "源二郎池", "南村住宅区", "诊所", "灯塔", "南海岸"];
 	
-	for (var i = 0; i < 22; i++) {
-		var button = document.createElement("button");
-		button.id = "move" + i;
-		button.value = i;
-		button.innerHTML = moveList[i];
-		button.onclick = function() {
-			myPost("mode=command&command=move&moveto=" + this.value);
-		};
-		myMove.appendChild(button);
-	}
+	for (var i = 0; i < 22; i++)
+		myMove.appendChild(createButton(moveList[i], "mode=command&command=move&moveto=" + i, "move" + i));
 	
 	//Items
 	var myItems = $("myItems");
@@ -51,15 +53,8 @@ var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "
 	title_items.innerHTML = "物品";
 	myItems.appendChild(title_items);
 
-	for (var i = 1; i <= 5; i++) {
-		var button = document.createElement("button");
-		button.id = "item" + i;
-		button.value = i;
-		button.onclick = function() {
-			myPost("mode=command&command=itm" + this.value);
-		};
-		myItems.appendChild(button);
-	}
+	for (var i = 1; i <= 5; i++)
+		myItems.appendChild(createButton(null, "mode=command&command=itm" + i, "item" + i));
 	
 	//Actions
 	var myActions = $("myActions");
@@ -68,13 +63,13 @@ var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "
 	title_actions.innerHTML = "行为";
 	myActions.appendChild(title_actions);
 
-	var button_search = document.createElement("button");
-	button_search.innerHTML = "探索";
-	button_search.onclick = function() {
-		myPost("mode=command&command=search");
-	};
-	myActions.appendChild(button_search);
-	
+	myActions.appendChild(createButton("探索", "mode=command&command=search"));
+	myActions.appendChild(createButton("静养", "mode=command&command=rest3"));
+	myActions.appendChild(createButton("包扎", "mode=command&command=special&sp_cmd=sp_inf"));
+	myActions.appendChild(createButton("商店", "mode=command&command=special&sp_cmd=sp_shop"));
+	myActions.appendChild(createButton("合成", "mode=command&command=itemmain&itemcmd=itemmix"));
+	myActions.appendChild(createButton("卸装", "mode=command&command=itemmain&itemcmd=itemoff"));
+
 	//Attack
 	
 	
