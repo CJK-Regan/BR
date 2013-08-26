@@ -1,5 +1,5 @@
 
-var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "myShop", "myBack"];
+var divList = ["myMessage", "myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "myShop", "myBind", "myBack"];
 
 function createButton(name, command, id) {
 	var button = document.createElement("button");
@@ -68,7 +68,25 @@ function createButton(name, command, id) {
 	myActions.appendChild(createButton("包扎", "mode=command&command=special&sp_cmd=sp_inf"));
 	myActions.appendChild(createButton("商店", "mode=command&command=special&sp_cmd=sp_shop"));
 	myActions.appendChild(createButton("合成", "mode=command&command=itemmain&itemcmd=itemmix"));
-	myActions.appendChild(createButton("卸装", "mode=command&command=itemmain&itemcmd=itemoff"));
+	myActions.appendChild(createButton("卸兵", "mode=itemmain&command=offwep"));
+
+	var title_pose = document.createElement("p");
+	title_pose.innerHTML = "姿态";
+	myActions.appendChild(title_pose);
+	myActions.appendChild(createButton("通常", "mode=special&command=pose0"));
+	myActions.appendChild(createButton("攻击", "mode=special&command=pose1"));
+	myActions.appendChild(createButton("防守", "mode=special&command=pose2"));
+	myActions.appendChild(createButton("探索", "mode=special&command=pose3"));
+	myActions.appendChild(createButton("隐藏", "mode=special&command=pose4"));
+	myActions.appendChild(createButton("治疗", "mode=special&command=pose5"));
+
+	var title_tac = document.createElement("p");
+	title_tac.innerHTML = "策略";
+	myActions.appendChild(title_tac);
+	myActions.appendChild(createButton("通常", "mode=special&command=tac0"));
+	myActions.appendChild(createButton("防御", "mode=special&command=tac2"));
+	myActions.appendChild(createButton("反击", "mode=special&command=tac3"));
+	myActions.appendChild(createButton("躲避", "mode=special&command=tac4"));
 
 	//Attack
 	
