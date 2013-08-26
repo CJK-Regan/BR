@@ -1,5 +1,9 @@
 
 var divList = ["myMessage", "myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "myShop", "myBind", "myBack"];
+var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮电局", "消防署", "观音堂", "清水池",
+	"西村神社", "墓地", "山丘地带", "隧道", "西村住宅区", "寺庙", "废校", 
+	"南村神社", "森林地带", "源二郎池", "南村住宅区", "诊所", "灯塔", "南海岸"];
+	
 
 function createButton(name, command, id) {
 	var button = document.createElement("button");
@@ -39,11 +43,7 @@ function createButton(name, command, id) {
 	title_move.innerHTML = "移动";
 	myMove.appendChild(title_move);
 
-	var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮电局", "消防署", "观音堂", "清水池",
-		"西村神社", "墓地", "山丘地带", "隧道", "西村住宅区", "寺庙", "废校", 
-		"南村神社", "森林地带", "源二郎池", "南村住宅区", "诊所", "灯塔", "南海岸"];
-	
-	for (var i = 0; i < 22; i++)
+	for (var i = 0; i < moveList.length; i++)
 		myMove.appendChild(createButton(moveList[i], "mode=command&command=move&moveto=" + i, "move" + i));
 	
 	//Items
@@ -108,6 +108,7 @@ function createButton(name, command, id) {
 	
 	//Back
 
+	update();
 })();
 
 function showDiv(id) {
@@ -119,7 +120,26 @@ function showDiv(id) {
 
 //div update function
 function update() {
+	//Main
+	if ($("move")) {
+		showDiv("myMain");
+		
+		//Move
+		var places = $("cmd").getElementsByTagName("select")[0].children;
+		for (var i = 0; i < moveList.length; i++) 
+			$("move" + i).hidden = true;
+		for (var i = 1; i < places.length; i++)
+			$("move" + places[i].value).hidden = false;
 
+		//Items
+		for (var i = 1; i <= 5; i++)
+			if ($("itm" + i)) {
+				$("item" + i).innerHTML = $("itm" + i).nextElementSibling.text.slice(0, -3);
+				$("item" + i).hidden = false;
+			}
+			else
+				$("item" + i).hidden = true;
+	}
 }
 
 //post dealer
@@ -129,13 +149,13 @@ function myPost(command) {
 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	request.onreadystatechange = function () {
 		if (request.readyState == 4) {
-			if (request.status == 200) 
+			if (request.status == 200) {
 				showGamedata(request.responseText);
+				update();
+			}
 			else 
 				showNotice(request.statusText);
 		}
 	};
 	request.send(command);
-
-	update();
 }
