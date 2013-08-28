@@ -1,5 +1,5 @@
 
-var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "myShop", "myBack"];
+var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myDrop", "myMake", "myShop", "myBack"];
 var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮电局", "消防署", "观音堂", "清水池",
 	"西村神社", "墓地", "山丘地带", "隧道", "西村住宅区", "寺庙", "废校", 
 	"南村神社", "森林地带", "源二郎池", "南村住宅区", "诊所", "灯塔", "南海岸"];
@@ -120,7 +120,7 @@ function createButton(name, command, id) {
 	myCorpse.appendChild(document.createElement("br"));
 	for (var i = 0; i < corpseList.length; i++) {
 		myCorpse.appendChild(createButton(null,
-					"'mode=corpse&wid=' + $('myCorpse').wid + 'command=" + corpseList[i] + "'", "m" + corpseList[i]));
+					"'mode=corpse&wid=' + $('myCorpse').wid + '&command=" + corpseList[i] + "'", "m" + corpseList[i]));
 		myCorpse.appendChild(document.createElement("br"));
 	}
 	myCorpse.appendChild(document.createElement("br"));
@@ -133,6 +133,16 @@ function createButton(name, command, id) {
 	myHeal.appendChild(document.createElement("br"));
 	myHeal.appendChild(createButton("返回", "'mode=rest&command=back'"));
 	
+	//Drop
+	var myDrop = $("myDrop");
+	myDrop.appendChild(document.createElement("br"));
+	myDrop.appendChild(createButton(null, "'mode=itemmain&command=dropitm0'"));
+	myDrop.appendChild(document.createElement("br"));
+	for (var i = 1; i <= 5; i++) {
+		myDrop.appendChild(document.createElement("br"));
+		myDrop.appendChild(createButton(null, "'mode=itemmain&command=swapitm" + i + "'"));
+	}
+
 	//Make
 	
 	
@@ -189,6 +199,7 @@ function update() {
 	}
 	//Corpse
 	else if ($("cmd").elements[0].value == "corpse") {
+		showDiv("myCorpse");
 		$("myCorpse").wid = $("cmd").elements[1].value;
 		for (var i = 0; i < corpseList.length; i++)
 			if ($(corpseList[i])) {
@@ -197,6 +208,12 @@ function update() {
 			}
 			else
 				$("m" + corpseList[i]).hidden = true;
+	}
+	//Drop
+	else if ($("swapitm1")) {
+		showDiv("myDrop");
+		for (var i = 0; i <=5; i++)
+			$("myDrop").getElementsByTagName("button")[i].innerHTML = $("cmd").getElementsByTagName("a")[i].text;
 	}
 	//Rest
 	else if ($("rest"))
