@@ -9,7 +9,7 @@ function createButton(name, command, id) {
 	var button = document.createElement("button");
 	button.innerHTML = name;
 	button.onclick = function() {
-		myPost(command);
+		myPost(eval(command));
 	};
 	button.id = id || null;
 	return button;
@@ -44,7 +44,7 @@ function createButton(name, command, id) {
 	myMove.appendChild(title_move);
 
 	for (var i = 0; i < moveList.length; i++)
-		myMove.appendChild(createButton(moveList[i], "mode=command&command=move&moveto=" + i, "move" + i));
+		myMove.appendChild(createButton(moveList[i], "'mode=command&command=move&moveto=" + i + "'", "move" + i));
 	
 	//Items
 	var myItems = $("myItems");
@@ -54,7 +54,7 @@ function createButton(name, command, id) {
 	myItems.appendChild(title_items);
 
 	for (var i = 1; i <= 5; i++)
-		myItems.appendChild(createButton(null, "mode=command&command=itm" + i, "item" + i));
+		myItems.appendChild(createButton(null, "'mode=command&command=itm" + i + "'", "item" + i));
 	
 	//Actions
 	var myActions = $("myActions");
@@ -63,33 +63,37 @@ function createButton(name, command, id) {
 	title_actions.innerHTML = "行为";
 	myActions.appendChild(title_actions);
 
-	myActions.appendChild(createButton("探索", "mode=command&command=search"));
-	myActions.appendChild(createButton("静养", "mode=command&command=rest3"));
-	myActions.appendChild(createButton("包扎", "mode=command&command=special&sp_cmd=sp_inf"));
-	myActions.appendChild(createButton("商店", "mode=command&command=special&sp_cmd=sp_shop"));
-	myActions.appendChild(createButton("合成", "mode=command&command=itemmain&itemcmd=itemmix"));
-	myActions.appendChild(createButton("卸兵", "mode=itemmain&command=offwep"));
+	myActions.appendChild(createButton("探索", "'mode=command&command=search'"));
+	myActions.appendChild(createButton("静养", "'mode=command&command=rest3'"));
+	myActions.appendChild(createButton("包扎", "'mode=command&command=special&sp_cmd=sp_inf'"));
+	myActions.appendChild(createButton("商店", "'mode=command&command=special&sp_cmd=sp_shop'"));
+	myActions.appendChild(createButton("合成", "'mode=command&command=itemmain&itemcmd=itemmix'"));
+	myActions.appendChild(createButton("卸兵", "'mode=itemmain&command=offwep'"));
 
 	var title_pose = document.createElement("p");
 	title_pose.innerHTML = "姿态";
 	myActions.appendChild(title_pose);
-	myActions.appendChild(createButton("通常", "mode=special&command=pose0"));
-	myActions.appendChild(createButton("攻击", "mode=special&command=pose1"));
-	myActions.appendChild(createButton("防守", "mode=special&command=pose2"));
-	myActions.appendChild(createButton("探索", "mode=special&command=pose3"));
-	myActions.appendChild(createButton("隐藏", "mode=special&command=pose4"));
-	myActions.appendChild(createButton("治疗", "mode=special&command=pose5"));
+	myActions.appendChild(createButton("通常", "'mode=special&command=pose0'"));
+	myActions.appendChild(createButton("攻击", "'mode=special&command=pose1'"));
+	myActions.appendChild(createButton("防守", "'mode=special&command=pose2'"));
+	myActions.appendChild(createButton("探索", "'mode=special&command=pose3'"));
+	myActions.appendChild(createButton("隐藏", "'mode=special&command=pose4'"));
+	myActions.appendChild(createButton("治疗", "'mode=special&command=pose5'"));
 
 	var title_tac = document.createElement("p");
 	title_tac.innerHTML = "策略";
 	myActions.appendChild(title_tac);
-	myActions.appendChild(createButton("通常", "mode=special&command=tac0"));
-	myActions.appendChild(createButton("防御", "mode=special&command=tac2"));
-	myActions.appendChild(createButton("反击", "mode=special&command=tac3"));
-	myActions.appendChild(createButton("躲避", "mode=special&command=tac4"));
+	myActions.appendChild(createButton("通常", "'mode=special&command=tac0'"));
+	myActions.appendChild(createButton("防御", "'mode=special&command=tac2'"));
+	myActions.appendChild(createButton("反击", "'mode=special&command=tac3'"));
+	myActions.appendChild(createButton("躲避", "'mode=special&command=tac4'"));
 
 	//Attack
-	
+	var myAttack = $("myAttack");
+	myAttack.appendChild(document.createElement("br");
+	myAttack.appendChild(createButton("攻击", "'mode=combat&wid=' + this.wid + '&command=' + this.kind", "attack"));
+	myAttack.appendChild(document.createElement("br");
+	myAttack.appendChild(createButton("逃跑", "'mode=combat&command=back'"));
 	
 	//Pick
 	
@@ -139,6 +143,12 @@ function update() {
 			}
 			else
 				$("item" + i).hidden = true;
+	}
+	//Attack
+	else if ($("cmd").elements[0].name == "message") {
+		showDiv("myAttack");
+		$("attack").wid = $("cmd").elements[2].value;
+		$("attack").kind = $("cmd").elements[3].value;
 	}
 }
 
