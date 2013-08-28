@@ -1,8 +1,9 @@
 
-var divList = ["myMessage", "myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "myShop", "myBind", "myBack"];
+var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myMake", "myShop", "myBack"];
 var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮电局", "消防署", "观音堂", "清水池",
 	"西村神社", "墓地", "山丘地带", "隧道", "西村住宅区", "寺庙", "废校", 
 	"南村神社", "森林地带", "源二郎池", "南村住宅区", "诊所", "灯塔", "南海岸"];
+var corpseList = ["wep", "arb", "arh", "ara", "arf", "art", "itm1", "itm2", "itm3", "itm4", "itm5", "money"];
 	
 
 function createButton(name, command, id) {
@@ -59,13 +60,12 @@ function createButton(name, command, id) {
 	//Actions
 	var myActions = $("myActions");
 	myActions.align = "center";
+	
 	var title_actions = document.createElement("p");
 	title_actions.innerHTML = "行为";
 	myActions.appendChild(title_actions);
-
 	myActions.appendChild(createButton("探索", "'mode=command&command=search'"));
 	myActions.appendChild(createButton("静养", "'mode=command&command=rest3'"));
-	myActions.appendChild(createButton("包扎", "'mode=command&command=special&sp_cmd=sp_inf'"));
 	myActions.appendChild(createButton("商店", "'mode=command&command=special&sp_cmd=sp_shop'"));
 	myActions.appendChild(createButton("合成", "'mode=command&command=itemmain&itemcmd=itemmix'"));
 	myActions.appendChild(createButton("卸兵", "'mode=itemmain&command=offwep'"));
@@ -88,6 +88,14 @@ function createButton(name, command, id) {
 	myActions.appendChild(createButton("反击", "'mode=special&command=tac3'"));
 	myActions.appendChild(createButton("躲避", "'mode=special&command=tac4'"));
 
+	var title_bind = document.createElement("p");
+	title_bind.innerHTML = "包扎";
+	myActions.appendChild(title_bind);
+	myActions.appendChild(createButton("体", "'mode=special&command=infb'"));
+	myActions.appendChild(createButton("头", "'mode=special&command=infh'"));
+	myActions.appendChild(createButton("腕", "'mode=special&command=infa'"));
+	myActions.appendChild(createButton("足", "'mode=special&command=inff'"));
+
 	//Attack
 	var myAttack = $("myAttack");
 	myAttack.appendChild(document.createElement("br"));
@@ -108,7 +116,15 @@ function createButton(name, command, id) {
 	myPick.appendChild(createButton("丢弃", "'mode=itemmain&command=dropitm0'"));
 	
 	//Corpse
-	
+	var myCorpse = $("myCorpse");	
+	myCorpse.appendChild(document.createElement("br"));
+	for (var i = 0; i < corpseList.length; i++) {
+		myCorpse.appendChild(createButton(null,
+					"'mode=corpse&wid=' + $('myCorpse').wid + 'command=" + corpseList[i] + "'", "m" + corpseList[i]));
+		myCorpse.appendChild(document.createElement("br"));
+	}
+	myCorpse.appendChild(document.createElement("br"));
+	myCorpse.appendChild(createButton("返回", "'mode=corpse&command=menu'"));
 	
 	//Heal
 	var myHeal = $("myHeal");	
@@ -124,6 +140,7 @@ function createButton(name, command, id) {
 	
 	
 	//Back
+
 
 	update();
 })();
@@ -151,7 +168,7 @@ function update() {
 		//Items
 		for (var i = 1; i <= 5; i++)
 			if ($("itm" + i)) {
-				$("item" + i).innerHTML = $("itm" + i).nextElementSibling.text.slice(0, -3);
+				$("item" + i).innerHTML = $("itm" + i).nextSibling.text.slice(0, -3);
 				$("item" + i).hidden = false;
 			}
 			else
@@ -169,6 +186,17 @@ function update() {
 		if ($("message").firstElementChild)
 			$("message").removeChild($("message").firstElementChild);
 		$("message").appendChild($("cmd").getElementsByClassName("yellow")[0]);
+	}
+	//Corpse
+	else if ($("cmd").elements[0].value == "corpse") {
+		$("myCorpse").wid = $("cmd").elements[1].value;
+		for (var i = 0; i < corpseList.length; i++)
+			if ($(corpseList[i])) {
+				$("m" + corpseList[i]).innerHTML = $(corpseList[i]).nextSibling.text;
+				$("m" + corpseList[i]).hidden = false;
+			}
+			else
+				$("m" + corpseList[i]).hidden = true;
 	}
 	//Rest
 	else if ($("rest"))
