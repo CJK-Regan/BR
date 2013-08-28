@@ -120,7 +120,8 @@ function createButton(name, command, id) {
 	myCorpse.appendChild(document.createElement("br"));
 	for (var i = 0; i < corpseList.length; i++) {
 		myCorpse.appendChild(createButton(null,
-					"'mode=corpse&wid=' + $('myCorpse').wid + '&command=" + corpseList[i] + "'", "m" + corpseList[i]));
+					"'mode=corpse&wid=' + $('myCorpse').wid + '&command=" + corpseList[i] + "'",
+					"m" + corpseList[i]));
 		myCorpse.appendChild(document.createElement("br"));
 	}
 	myCorpse.appendChild(document.createElement("br"));
@@ -213,7 +214,8 @@ function update() {
 	else if ($("swapitm1")) {
 		showDiv("myDrop");
 		for (var i = 0; i <=5; i++)
-			$("myDrop").getElementsByTagName("button")[i].innerHTML = $("cmd").getElementsByTagName("a")[i].text;
+			$("myDrop").getElementsByTagName("button")[i].innerHTML =
+				$("cmd").getElementsByTagName("a")[i].text;
 	}
 	//Rest
 	else if ($("rest"))
