@@ -96,7 +96,16 @@ function createButton(name, command, id) {
 	myAttack.appendChild(createButton("逃跑", "'mode=combat&command=back'"));
 	
 	//Pick
-	
+	var myPick = $("myPick");
+	var message = document.createElement("div");
+	message.id = "message";
+	message.innerHTML = "发现物品：";
+	myPick.appendChild(message);
+	myPick.appendChild(document.createElement("br"));
+	myPick.appendChild(document.createElement("br"));
+	myPick.appendChild(createButton("拾取", "'mode=itemmain&command=itemget'"));
+	myPick.appendChild(document.createElement("br"));
+	myPick.appendChild(createButton("丢弃", "'mode=itemmain&command=dropitm0'"));
 	
 	//Corpse
 	
@@ -153,6 +162,13 @@ function update() {
 		showDiv("myAttack");
 		$("attack").wid = $("cmd").elements[2].value;
 		$("attack").kind = $("cmd").elements[3].value;
+	}
+	//Pick
+	else if ($("itemget")) {
+		showDiv("myPick");
+		if ($("message").firstElementChild)
+			$("message").removeChild($("message").firstElementChild);
+		$("message").appendChild($("cmd").getElementsByClassName("yellow")[0]);
 	}
 	//Rest
 	else if ($("rest"))
