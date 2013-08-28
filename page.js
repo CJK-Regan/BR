@@ -90,9 +90,9 @@ function createButton(name, command, id) {
 
 	//Attack
 	var myAttack = $("myAttack");
-	myAttack.appendChild(document.createElement("br");
+	myAttack.appendChild(document.createElement("br"));
 	myAttack.appendChild(createButton("攻击", "'mode=combat&wid=' + this.wid + '&command=' + this.kind", "attack"));
-	myAttack.appendChild(document.createElement("br");
+	myAttack.appendChild(document.createElement("br"));
 	myAttack.appendChild(createButton("逃跑", "'mode=combat&command=back'"));
 	
 	//Pick
@@ -102,7 +102,11 @@ function createButton(name, command, id) {
 	
 	
 	//Heal
-	
+	var myHeal = $("myHeal");	
+	myHeal.appendChild(document.createElement("br"));
+	myHeal.appendChild(createButton("静养", "'mode=rest&command=rest'"));
+	myHeal.appendChild(document.createElement("br"));
+	myHeal.appendChild(createButton("返回", "'mode=rest&command=back'"));
 	
 	//Make
 	
@@ -150,6 +154,9 @@ function update() {
 		$("attack").wid = $("cmd").elements[2].value;
 		$("attack").kind = $("cmd").elements[3].value;
 	}
+	//Rest
+	else if ($("rest"))
+		showDiv("myHeal");
 }
 
 //post dealer
