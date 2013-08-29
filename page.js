@@ -1,10 +1,9 @@
 
-var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myDrop", "myMake", "myShop", "myBack"];
+var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myDrop"];
 var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮电局", "消防署", "观音堂", "清水池",
 	"西村神社", "墓地", "山丘地带", "隧道", "西村住宅区", "寺庙", "废校", 
 	"南村神社", "森林地带", "源二郎池", "南村住宅区", "诊所", "灯塔", "南海岸"];
 var corpseList = ["wep", "arb", "arh", "ara", "arf", "art", "itm1", "itm2", "itm3", "itm4", "itm5", "money"];
-	
 
 function createButton(name, command, id) {
 	var button = document.createElement("button");
@@ -143,16 +142,7 @@ function createButton(name, command, id) {
 		myDrop.appendChild(document.createElement("br"));
 		myDrop.appendChild(createButton(null, "'mode=itemmain&command=swapitm" + i + "'"));
 	}
-
-	//Make
 	
-	
-	//Shop
-	
-	
-	//Back
-
-
 	update();
 })();
 
@@ -220,6 +210,8 @@ function update() {
 	//Rest
 	else if ($("rest"))
 		showDiv("myHeal");
+	else
+		showDiv("cmd");
 }
 
 //post dealer
