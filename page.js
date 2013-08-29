@@ -99,7 +99,9 @@ function createButton(name, command, id) {
 	//Attack
 	var myAttack = $("myAttack");
 	myAttack.appendChild(document.createElement("br"));
-	myAttack.appendChild(createButton("攻击", "'mode=combat&wid=' + this.wid + '&command=' + this.kind", "attack"));
+	myAttack.appendChild(createButton("攻击",
+				"'mode=combat&message=Stop!&wid=' + this.wid + '&command=' + this.kind", 
+				"attack"));
 	myAttack.appendChild(document.createElement("br"));
 	myAttack.appendChild(createButton("逃跑", "'mode=combat&command=back'"));
 	
