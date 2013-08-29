@@ -147,6 +147,7 @@ function createButton(name, command, id) {
 })();
 
 function showDiv(id) {
+	$("cmd").hidden = true;
 	$(id).hidden = false;
 	for (var i = 0; i < divList.length; i++)
 		if (divList[i] != id)
@@ -213,8 +214,7 @@ function update() {
 	else {
 		showDiv("cmd");
 		$("submit").onclick = function() {
-			postCommand();
-			update();
+			myPost(getRequestBody(document.forms['cmd']));
 			return false;
 		}
 	}

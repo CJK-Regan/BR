@@ -3,7 +3,6 @@
 	document.getElementsByTagName("table")[5].style.width = "400px";
 	document.getElementById("chatmsg").style.width = "380px";
 	document.body.removeChild(document.body.lastElementChild);
-	document.getElementById("cmd").hidden = true;
 })();
 
 //insert js to DOM
