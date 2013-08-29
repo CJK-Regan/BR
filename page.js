@@ -67,6 +67,7 @@ function createButton(name, command, id) {
 	myActions.appendChild(createButton("静养", "'mode=command&command=rest3'"));
 	myActions.appendChild(createButton("商店", "'mode=command&command=special&sp_cmd=sp_shop'"));
 	myActions.appendChild(createButton("合成", "'mode=command&command=itemmain&itemcmd=itemmix'"));
+	myActions.appendChild(createButton("整理", "'mode=command&command=itemmain&itemcmd=itemmerge'"));
 	myActions.appendChild(createButton("卸兵", "'mode=itemmain&command=offwep'"));
 
 	var title_pose = document.createElement("p");
