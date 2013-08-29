@@ -210,8 +210,14 @@ function update() {
 	//Rest
 	else if ($("rest"))
 		showDiv("myHeal");
-	else
+	else {
 		showDiv("cmd");
+		$("submit").onclick = function() {
+			postCommand();
+			update();
+			return false;
+		}
+	}
 }
 
 //post dealer
