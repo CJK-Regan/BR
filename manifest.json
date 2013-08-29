@@ -3,7 +3,7 @@
 
 	"name": "BR extension",
 	"version": "1.0",
-	"description": "BR quick action",
+	"description": "BR game",
 	"icons": {"128": "br.png"},
 	
 	"browser_action": {
