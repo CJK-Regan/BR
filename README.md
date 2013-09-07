@@ -3,10 +3,10 @@
 
 <h6>Improve action speed (supose one mouse click is a unit speed):</h6>
 <ul>
-<li>change pose, change tactic, disarm            x 5</li>
-<li>bind up wounds                                x 4-5</li>
-<li>move, enter shop                              x 3</li>
-<li>search, use items, rest, pick and swap items  x 2</li>
+<li>x5: change pose, change tactic, disarm</li>
+<li>x4: bind up wounds</li>
+<li>x3: move, enter shop</li>
+<li>x2: search, use items, rest, pick and swap items</li>
 </ul>
 
 <h6>Additional functions:</h6>
