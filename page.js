@@ -5,6 +5,9 @@ var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮�
 	"南村神社", "森林地带", "源二郎池", "南村住宅区", "诊所", "灯塔", "南海岸"];
 var corpseList = ["wep", "arb", "arh", "ara", "arf", "art", "itm1", "itm2", "itm3", "itm4", "itm5", "money"];
 
+//Words to shout when actively attack.
+var words = "";
+
 function createButton(name, command, id) {
 	var button = document.createElement("button");
 	button.innerHTML = name;
@@ -15,13 +18,15 @@ function createButton(name, command, id) {
 	return button;
 }
 
-//initialize div
+//Initialize div structure.
 (function() {
+	//Root node 
 	var div = document.createElement("div");
 	$("cmd").parentElement.appendChild(div);
 	div.id = "myDiv";
 
-	for (var i = 0; i < divList.length; i++) {
+	//Create childNodes as main blocks.
+	for (i in divList) {
 		div.appendChild(document.createElement("div"));
 		div.lastChild.id = divList[i];
 	}
@@ -43,7 +48,7 @@ function createButton(name, command, id) {
 	title_move.innerHTML = "移动";
 	myMove.appendChild(title_move);
 
-	for (var i = 0; i < moveList.length; i++)
+	for (i in moveList)
 		myMove.appendChild(createButton(moveList[i], "'mode=command&command=move&moveto=" + i + "'", "move" + i));
 	
 	//Items
@@ -67,15 +72,17 @@ function createButton(name, command, id) {
 	myActions.appendChild(createButton("静养", "'mode=command&command=rest3'"));
 	myActions.appendChild(createButton("商店", "'mode=command&command=special&sp_cmd=sp_shop'"));
 	myActions.appendChild(createButton("合成", "'mode=command&command=itemmain&itemcmd=itemmix'"));
+	//Poison check is only enabled for cooking club
+	myActions.appendChild(createButton("验毒", "'mode=command&command=special&sp_cmd=sp_poison'"));
 	myActions.appendChild(createButton("整理", "'mode=command&command=itemmain&itemcmd=itemmerge'"));
 	myActions.appendChild(createButton("卸兵", "'mode=itemmain&command=offwep'"));
 
 	var title_pose = document.createElement("p");
 	title_pose.innerHTML = "姿态";
 	myActions.appendChild(title_pose);
-	myActions.appendChild(createButton("通常", "'mode=special&command=pose0'"));
+	//myActions.appendChild(createButton("通常", "'mode=special&command=pose0'"));
 	myActions.appendChild(createButton("攻击", "'mode=special&command=pose1'"));
-	myActions.appendChild(createButton("防守", "'mode=special&command=pose2'"));
+	//myActions.appendChild(createButton("防守", "'mode=special&command=pose2'"));
 	myActions.appendChild(createButton("探索", "'mode=special&command=pose3'"));
 	myActions.appendChild(createButton("隐藏", "'mode=special&command=pose4'"));
 	myActions.appendChild(createButton("治疗", "'mode=special&command=pose5'"));
@@ -83,8 +90,8 @@ function createButton(name, command, id) {
 	var title_tac = document.createElement("p");
 	title_tac.innerHTML = "策略";
 	myActions.appendChild(title_tac);
-	myActions.appendChild(createButton("通常", "'mode=special&command=tac0'"));
-	myActions.appendChild(createButton("防御", "'mode=special&command=tac2'"));
+	//myActions.appendChild(createButton("通常", "'mode=special&command=tac0'"));
+	//myActions.appendChild(createButton("防御", "'mode=special&command=tac2'"));
 	myActions.appendChild(createButton("反击", "'mode=special&command=tac3'"));
 	myActions.appendChild(createButton("躲避", "'mode=special&command=tac4'"));
 
@@ -100,7 +107,7 @@ function createButton(name, command, id) {
 	var myAttack = $("myAttack");
 	myAttack.appendChild(document.createElement("br"));
 	myAttack.appendChild(createButton("攻击",
-				"'mode=combat&message=Stop!&wid=' + this.wid + '&command=' + this.kind", 
+				"'mode=combat&message=" + words + "&wid=' + this.wid + '&command=' + this.kind", 
 				"attack"));
 	myAttack.appendChild(document.createElement("br"));
 	myAttack.appendChild(createButton("逃跑", "'mode=combat&command=back'"));
@@ -120,7 +127,7 @@ function createButton(name, command, id) {
 	//Corpse
 	var myCorpse = $("myCorpse");	
 	myCorpse.appendChild(document.createElement("br"));
-	for (var i = 0; i < corpseList.length; i++) {
+	for (i in corpseList) {
 		myCorpse.appendChild(createButton(null,
 					"'mode=corpse&wid=' + $('myCorpse').wid + '&command=" + corpseList[i] + "'",
 					"m" + corpseList[i]));
@@ -146,18 +153,19 @@ function createButton(name, command, id) {
 		myDrop.appendChild(createButton(null, "'mode=itemmain&command=swapitm" + i + "'"));
 	}
 	
+	//First update when the page is loaded.
 	update();
 })();
 
 function showDiv(id) {
 	$("cmd").hidden = true;
 	$(id).hidden = false;
-	for (var i = 0; i < divList.length; i++)
+	for (i in divList)
 		if (divList[i] != id)
 			$(divList[i]).hidden = true;
 }
 
-//div update function
+//Update div when contents in $("cmd") have changed.
 function update() {
 	//Main
 	if ($("move")) {
@@ -165,9 +173,9 @@ function update() {
 		
 		//Move
 		var places = $("cmd").getElementsByTagName("select")[0].children;
-		for (var i = 0; i < moveList.length; i++) 
+		for (i in moveList) 
 			$("move" + i).hidden = true;
-		for (var i = 1; i < places.length; i++)
+		for (i in places)
 			$("move" + places[i].value).hidden = false;
 
 		//Items
@@ -196,7 +204,7 @@ function update() {
 	else if ($("cmd").elements[0].value == "corpse") {
 		showDiv("myCorpse");
 		$("myCorpse").wid = $("cmd").elements[1].value;
-		for (var i = 0; i < corpseList.length; i++)
+		for (i in corpseList)
 			if ($(corpseList[i])) {
 				$("m" + corpseList[i]).innerHTML = $(corpseList[i]).nextSibling.text;
 				$("m" + corpseList[i]).hidden = false;
@@ -223,7 +231,7 @@ function update() {
 	}
 }
 
-//post dealer
+//Post request and deal with the response.
 function myPost(command) {
 	var request = new XMLHttpRequest();
 	request.open("post", "command.php", true);
