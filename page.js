@@ -175,7 +175,7 @@ function update() {
 		var places = $("cmd").getElementsByTagName("select")[0].children;
 		for (i in moveList) 
 			$("move" + i).hidden = true;
-		for (i in places)
+		for (var i = 1; i < places.length; i++)
 			$("move" + places[i].value).hidden = false;
 
 		//Items
