@@ -127,7 +127,7 @@ function createButton(name, command, id) {
 	//Corpse
 	var myCorpse = $("myCorpse");	
 	myCorpse.appendChild(document.createElement("br"));
-	for (i in corpseList) {
+	for (var i = 0; i < corpseList.length; i++) {
 		myCorpse.appendChild(createButton(null,
 					"'mode=corpse&wid=' + $('myCorpse').wid + '&command=" + corpseList[i] + "'",
 					"m" + corpseList[i]));
