@@ -1,4 +1,7 @@
 
+//Flag that indicates whether to use new view of not
+var Flag = true;
+
 var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myDrop"];
 var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮电局", "消防署", "观音堂", "清水池",
 	"西村神社", "墓地", "山丘地带", "隧道", "西村住宅区", "寺庙", "废校", 
@@ -20,6 +23,15 @@ function createButton(name, command, id) {
 
 //Initialize div structure.
 (function() {
+	//Switch link
+	var flagLink = document.createElement("a");
+	flagLink.innerHTML = ">>切换界面";
+	flagLink.onclick = function() {
+		Flag = !Flag;
+		update();
+	}
+	document.getElementsByClassName("headerlink")[0].appendChild(flagLink);
+	
 	//Root node 
 	var div = document.createElement("div");
 	$("cmd").parentElement.appendChild(div);
@@ -167,6 +179,10 @@ function showDiv(id) {
 
 //Update div when contents in $("cmd") have changed.
 function update() {
+	if (!Flag) {
+		showDiv("cmd");
+		return;
+	}
 	//Main
 	if ($("move")) {
 		showDiv("myMain");
