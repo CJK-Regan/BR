@@ -61,7 +61,7 @@ function createConfigBar(config, name, id) {
 	var div = document.createElement("div");
 	$("cmd").parentElement.appendChild(div);
 	div.id = "myDiv";
-	for (var i = 0; i < divList; i++) {
+	for (var i = 0; i < divList.length; i++) {
 		div.appendChild(document.createElement("div"));
 		div.lastChild.id = divList[i];
 	}
@@ -83,7 +83,7 @@ function createConfigBar(config, name, id) {
 	title_move.innerHTML = "移动";
 	myMove.appendChild(title_move);
 
-	for (var i = 0; i < moveList; i++)
+	for (var i = 0; i < moveList.length; i++)
 		myMove.appendChild(createButton(moveList[i], "'mode=command&command=move&moveto=" + i + "'", "move" + i));
 	
 	//Items
@@ -179,13 +179,13 @@ function createConfigBar(config, name, id) {
 	myHeal.appendChild(createButton("返回", "'mode=rest&command=back'"));
 	
 	//Swap
-	var myDrop = $("myDrop");
-	myDrop.appendChild(document.createElement("br"));
-	myDrop.appendChild(createButton(null, "'mode=itemmain&command=dropitm0'"));
-	myDrop.appendChild(document.createElement("br"));
+	var mySwap = $("mySwap");
+	mySwap.appendChild(document.createElement("br"));
+	mySwap.appendChild(createButton(null, "'mode=itemmain&command=dropitm0'"));
+	mySwap.appendChild(document.createElement("br"));
 	for (var i = 1; i <= 5; i++) {
-		myDrop.appendChild(document.createElement("br"));
-		myDrop.appendChild(createButton(null, "'mode=itemmain&command=swapitm" + i + "'"));
+		mySwap.appendChild(document.createElement("br"));
+		mySwap.appendChild(createButton(null, "'mode=itemmain&command=swapitm" + i + "'"));
 	}
 
 	//First update when the page is loaded.
@@ -195,7 +195,7 @@ function createConfigBar(config, name, id) {
 function showDiv(id) {
 	$("cmd").hidden = true;
 	$(id).hidden = false;
-	for (i in divList)
+	for (var i = 0; i < divList.length; i++)
 		if (divList[i] != id)
 			$(divList[i]).hidden = true;
 }
@@ -212,7 +212,7 @@ function update() {
 		
 		//Move
 		var places = $("cmd").getElementsByTagName("select")[0].children;
-		for (i in moveList) 
+		for (var i = 0; i < moveList.length; i++) 
 			$("move" + i).hidden = true;
 		for (var i = 1; i < places.length; i++)
 			$("move" + places[i].value).hidden = false;
@@ -243,7 +243,7 @@ function update() {
 	else if ($("cmd").elements[0].value == "corpse") {
 		showDiv("myCorpse");
 		$("myCorpse").wid = $("cmd").elements[1].value;
-		for (i in corpseList)
+		for (var i = 0; i < corpseList.length; i++)
 			if ($(corpseList[i])) {
 				$("m" + corpseList[i]).innerHTML = $(corpseList[i]).nextSibling.text;
 				$("m" + corpseList[i]).hidden = false;
