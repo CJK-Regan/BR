@@ -1,15 +1,14 @@
 
-//Flag that indicates whether to use new view of not
-var Flag = true;
+var flag = true;       //Flag that indicates whether to use new view of not
+var autoAttack = true; //Automatically actively fight.
+var autoCheck = true;  //Automatically check when being attacked or after actively fighting.
+var words = "";        //Words to shout when actively fight.
 
-var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "myDrop"];
+var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "mySwap"];
 var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮电局", "消防署", "观音堂", "清水池",
 	"西村神社", "墓地", "山丘地带", "隧道", "西村住宅区", "寺庙", "废校", 
 	"南村神社", "森林地带", "源二郎池", "南村住宅区", "诊所", "灯塔", "南海岸"];
 var corpseList = ["wep", "arb", "arh", "ara", "arf", "art", "itm1", "itm2", "itm3", "itm4", "itm5", "money"];
-
-//Words to shout when actively attack.
-var words = "";
 
 function createButton(name, command, id) {
 	var button = document.createElement("button");
@@ -21,24 +20,48 @@ function createButton(name, command, id) {
 	return button;
 }
 
-//Initialize div structure.
+function createConfigBar(config, name, id) {
+	var a = document.createElement("a");
+	a.value = config;
+	if (config)
+		a.style.color = "green";
+	a.innerHTML = name;
+	a.id = id || null;
+	a.onclick = function() {
+		this.value = !this.value;
+		if (this.value)
+			this.style.color = "green";
+		else
+			this.removeAttribute("style");
+	};
+	return a;
+}
+
+//Headerlink
 (function() {
-	//Switch link
+	var headerlink = document.getElementsByClassName("headerlink")[0];
+	headerlink.removeChild(headerlink.children[8]);
+	headerlink.removeChild(headerlink.children[7]);
+	headerlink.removeChild(headerlink.children[2]);
 	var flagLink = document.createElement("a");
 	flagLink.innerHTML = ">>切换界面";
 	flagLink.onclick = function() {
-		Flag = !Flag;
+		flag = !flag;
 		update();
 	}
-	document.getElementsByClassName("headerlink")[0].appendChild(flagLink);
-	
+	headerlink.appendChild(flagLink);
+	headerlink.appendChild(document.createElement("br"));
+	headerlink.appendChild(createConfigBar(autoAttack, "自动攻击", "autoAttack"));
+	headerlink.appendChild(createConfigBar(autoCheck, "自动确定", "autoCheck"));
+})();
+
+//Div structure.
+(function() {
 	//Root node 
 	var div = document.createElement("div");
 	$("cmd").parentElement.appendChild(div);
 	div.id = "myDiv";
-
-	//Create childNodes as main blocks.
-	for (i in divList) {
+	for (var i = 0; i < divList; i++) {
 		div.appendChild(document.createElement("div"));
 		div.lastChild.id = divList[i];
 	}
@@ -60,7 +83,7 @@ function createButton(name, command, id) {
 	title_move.innerHTML = "移动";
 	myMove.appendChild(title_move);
 
-	for (i in moveList)
+	for (var i = 0; i < moveList; i++)
 		myMove.appendChild(createButton(moveList[i], "'mode=command&command=move&moveto=" + i + "'", "move" + i));
 	
 	//Items
@@ -132,7 +155,7 @@ function createButton(name, command, id) {
 	myPick.appendChild(message);
 	myPick.appendChild(document.createElement("br"));
 	myPick.appendChild(document.createElement("br"));
-	myPick.appendChild(createButton("拾取", "'mode=itemmain&command=itemget'"));
+	myPick.appendChild(createButton("拾取", "'mode=itemmain&command=itemget'"), "pick");
 	myPick.appendChild(document.createElement("br"));
 	myPick.appendChild(createButton("丢弃", "'mode=itemmain&command=dropitm0'"));
 	
@@ -155,7 +178,7 @@ function createButton(name, command, id) {
 	myHeal.appendChild(document.createElement("br"));
 	myHeal.appendChild(createButton("返回", "'mode=rest&command=back'"));
 	
-	//Drop
+	//Swap
 	var myDrop = $("myDrop");
 	myDrop.appendChild(document.createElement("br"));
 	myDrop.appendChild(createButton(null, "'mode=itemmain&command=dropitm0'"));
@@ -164,7 +187,7 @@ function createButton(name, command, id) {
 		myDrop.appendChild(document.createElement("br"));
 		myDrop.appendChild(createButton(null, "'mode=itemmain&command=swapitm" + i + "'"));
 	}
-	
+
 	//First update when the page is loaded.
 	update();
 })();
@@ -177,9 +200,9 @@ function showDiv(id) {
 			$(divList[i]).hidden = true;
 }
 
-//Update div when contents in $("cmd") have changed.
+//Update
 function update() {
-	if (!Flag) {
+	if (!flag) {
 		showDiv("cmd");
 		return;
 	}
@@ -228,11 +251,11 @@ function update() {
 			else
 				$("m" + corpseList[i]).hidden = true;
 	}
-	//Drop
+	//Swap
 	else if ($("swapitm1")) {
-		showDiv("myDrop");
+		showDiv("mySwap");
 		for (var i = 0; i <=5; i++)
-			$("myDrop").getElementsByTagName("button")[i].innerHTML =
+			$("mySwap").getElementsByTagName("button")[i].innerHTML =
 				$("cmd").getElementsByTagName("a")[i].text;
 	}
 	//Rest
@@ -244,6 +267,18 @@ function update() {
 			myPost(getRequestBody(document.forms['cmd']));
 			return false;
 		}
+	}
+	autoPost();
+}
+
+function autoPost() {
+	if (!$("myAttack").hidden && $("autoAttack").value) {
+		$("attack").onclick();
+		return;
+	}
+	if ($("back") && $("myAttack").hidden && !$("rest") && $("autoCheck").value) {
+		myPost("mode=command&command=back");
+		return;
 	}
 }
 
