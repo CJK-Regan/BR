@@ -2,8 +2,8 @@
 	"manifest_version": 2,
 
 	"name": "BR extension",
-	"version": "1.0",
-	"description": "BR game",
+	"version": "2.0",
+	"description": "extension for BR game",
 	"icons": {"128": "br.png"},
 	
 	"browser_action": {
