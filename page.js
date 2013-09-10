@@ -1,7 +1,6 @@
 
 var flag = true;       //Flag that indicates whether to use new view of not
 var autoAttack = true; //Automatically actively fight.
-var autoCheck = true;  //Automatically check when being attacked or after actively fighting.
 var words = "";        //Words to shout when actively fight.
 
 var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "mySwap"];
@@ -52,7 +51,6 @@ function createConfigBar(config, name, id) {
 	headerlink.appendChild(flagLink);
 	headerlink.appendChild(document.createElement("br"));
 	headerlink.appendChild(createConfigBar(autoAttack, "自动攻击", "autoAttack"));
-	headerlink.appendChild(createConfigBar(autoCheck, "自动确定", "autoCheck"));
 })();
 
 //Div structure.
@@ -274,10 +272,6 @@ function update() {
 function autoPost() {
 	if (!$("myAttack").hidden && $("autoAttack").value) {
 		$("attack").onclick();
-		return;
-	}
-	if ($("back") && $("myAttack").hidden && !$("rest") && $("autoCheck").value) {
-		myPost("mode=command&command=back");
 		return;
 	}
 }
