@@ -13,4 +13,6 @@
 <ul>
 <li>Enter shop in any places.</li>
 <li>Rest to recover both HP and VIT in any places.</li>
+<li>Automatically fight when come across enemys.</li>
+<li>Automatically check result of fight.</li>
 </ul>
