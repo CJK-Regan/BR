@@ -14,5 +14,5 @@
 <li>Enter shop in any places.</li>
 <li>Rest to recover both HP and VIT in any places.</li>
 <li>Automatically fight when come across enemys.</li>
-<li>Automatically check result of fight.</li>
+<li>Automatically shout when actively fight, and insert HTML in the words.</li>
 </ul>

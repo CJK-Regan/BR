@@ -1,7 +1,11 @@
 
 var flag = true;       //Flag that indicates whether to use new view of not
 var autoAttack = true; //Automatically actively fight.
-var words = "";        //Words to shout when actively fight.
+var autoShout = true;  //Automatically shout when actively fight.
+//Words to shout when actively fight.
+var words = "";
+var insert =
+	"<form id=cmd name=insert><input type=hidden name=mode value=itemmain><input type=hidden name=command value=offwep></form>";
 
 var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "mySwap"];
 var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮电局", "消防署", "观音堂", "清水池",
@@ -24,7 +28,7 @@ function createConfigBar(config, name, id) {
 	a.value = config;
 	if (config)
 		a.style.color = "green";
-	a.innerHTML = name;
+	a.innerHTML = "<" + name + ">";
 	a.id = id || null;
 	a.onclick = function() {
 		this.value = !this.value;
@@ -51,6 +55,7 @@ function createConfigBar(config, name, id) {
 	headerlink.appendChild(flagLink);
 	headerlink.appendChild(document.createElement("br"));
 	headerlink.appendChild(createConfigBar(autoAttack, "自动攻击", "autoAttack"));
+	headerlink.appendChild(createConfigBar(autoShout, "喊话功能", "autoShout"));
 })();
 
 //Div structure.
@@ -140,7 +145,7 @@ function createConfigBar(config, name, id) {
 	var myAttack = $("myAttack");
 	myAttack.appendChild(document.createElement("br"));
 	myAttack.appendChild(createButton("攻击",
-				"'mode=combat&message=" + words + "&wid=' + this.wid + '&command=' + this.kind", 
+				"'mode=combat&message=' + words + '&wid=' + this.wid + '&command=' + this.kind", 
 				"attack"));
 	myAttack.appendChild(document.createElement("br"));
 	myAttack.appendChild(createButton("逃跑", "'mode=combat&command=back'"));
@@ -200,10 +205,19 @@ function showDiv(id) {
 
 //Update
 function update() {
+	//Prevent self effect by insert content.
+	if ($("cmd").attributes["name"].value == "insert")
+		$("cmd").id = null;
+	//Change view.
 	if (!flag) {
 		showDiv("cmd");
 		return;
 	}
+	//Autoshout.
+	if (autoShout)
+		word = insert;
+	else
+		word = "";
 	//Main
 	if ($("move")) {
 		showDiv("myMain");
