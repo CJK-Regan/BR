@@ -215,9 +215,9 @@ function update() {
 	}
 	//Autoshout.
 	if (autoShout)
-		word = insert;
+		words = insert;
 	else
-		word = "";
+		words = "";
 	//Main
 	if ($("move")) {
 		showDiv("myMain");
