@@ -1,34 +1,36 @@
 {
 	"manifest_version": 2,
-
 	"name": "BR extension",
 	"version": "2.0",
 	"description": "extension for BR game",
 	"icons": {"128": "br.png"},
 	
-	"browser_action": {
+	"browser_action":
+	{
 		"default_icon": "br.png",
 		"default_title": "BR game"
 	},
-	
+
 	"background": {"scripts": ["bg.js"]},
 	"permissions": ["tabs"],
-
-	"content_scripts": [
+	
+	"content_scripts":
+	[
 		{
 			"matches": ["http://br.265g.com/game.php"],
-			"js": ["content.js"]
+			"js": ["game.js"]
 		},
 		{
-			"matches": [
+			"matches":
+			[
 				"http://br.265g.com/news.php",
 				"http://br.265g.com/alive.php",
 				"http://br.265g.com/winner.php",
 				"http://br.265g.com/help.php"
 			],
-			"js": ["view.js"]
+			"js": ["others.js"]
 		}
 	],
-
-	"web_accessible_resources": ["page.js"]
+	
+	"web_accessible_resources": ["main.js", "update.js"]
 }

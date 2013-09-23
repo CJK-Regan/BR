@@ -1,17 +1,15 @@
-
+//Configurations
 var flag = true;       //Flag that indicates whether to use new view of not
 var autoAttack = true; //Automatically actively fight.
-var autoShout = true;  //Automatically shout when actively fight.
-//Words to shout when actively fight.
 var words = "";
-var insert =
-	"<form id=cmd name=insert><input type=hidden name=mode value=itemmain><input type=hidden name=command value=offwep></form>";
 
+//Static lists
 var divList = ["myMain", "myAttack", "myPick", "myCorpse", "myHeal", "mySwap"];
 var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮电局", "消防署", "观音堂", "清水池",
 	"西村神社", "墓地", "山丘地带", "隧道", "西村住宅区", "寺庙", "废校", 
 	"南村神社", "森林地带", "源二郎池", "南村住宅区", "诊所", "灯塔", "南海岸"];
 var corpseList = ["wep", "arb", "arh", "ara", "arf", "art", "itm1", "itm2", "itm3", "itm4", "itm5", "money"];
+
 
 function createButton(name, command, id) {
 	var button = document.createElement("button");
@@ -23,7 +21,7 @@ function createButton(name, command, id) {
 	return button;
 }
 
-function createConfigBar(config, name, id) {
+function createConfigBar(config, name, id, func) {
 	var a = document.createElement("a");
 	a.value = config;
 	if (config)
@@ -36,11 +34,13 @@ function createConfigBar(config, name, id) {
 			this.style.color = "green";
 		else
 			this.removeAttribute("style");
+		if (func)
+			func();
 	};
 	return a;
 }
 
-//Headerlink
+//Header
 (function() {
 	var headerlink = document.getElementsByClassName("headerlink")[0];
 	headerlink.removeChild(headerlink.children[8]);
@@ -55,10 +55,9 @@ function createConfigBar(config, name, id) {
 	headerlink.appendChild(flagLink);
 	headerlink.appendChild(document.createElement("br"));
 	headerlink.appendChild(createConfigBar(autoAttack, "自动攻击", "autoAttack"));
-	headerlink.appendChild(createConfigBar(autoShout, "喊话功能", "autoShout"));
 })();
 
-//Div structure.
+//Div structure
 (function() {
 	//Root node 
 	var div = document.createElement("div");
@@ -85,7 +84,6 @@ function createConfigBar(config, name, id) {
 	var title_move = document.createElement("p");
 	title_move.innerHTML = "移动";
 	myMove.appendChild(title_move);
-
 	for (var i = 0; i < moveList.length; i++)
 		myMove.appendChild(createButton(moveList[i], "'mode=command&command=move&moveto=" + i + "'", "move" + i));
 	
@@ -95,7 +93,6 @@ function createConfigBar(config, name, id) {
 	var title_items = document.createElement("p");
 	title_items.innerHTML = "物品";
 	myItems.appendChild(title_items);
-
 	for (var i = 1; i <= 5; i++)
 		myItems.appendChild(createButton(null, "'mode=command&command=itm" + i + "'", "item" + i));
 	
@@ -110,7 +107,6 @@ function createConfigBar(config, name, id) {
 	myActions.appendChild(createButton("静养", "'mode=command&command=rest3'"));
 	myActions.appendChild(createButton("商店", "'mode=command&command=special&sp_cmd=sp_shop'"));
 	myActions.appendChild(createButton("合成", "'mode=command&command=itemmain&itemcmd=itemmix'"));
-	//Poison check is only enabled for cooking club
 	myActions.appendChild(createButton("验毒", "'mode=command&command=special&sp_cmd=sp_poison'"));
 	myActions.appendChild(createButton("整理", "'mode=command&command=itemmain&itemcmd=itemmerge'"));
 	myActions.appendChild(createButton("卸兵", "'mode=itemmain&command=offwep'"));
@@ -195,101 +191,6 @@ function createConfigBar(config, name, id) {
 	update();
 })();
 
-function showDiv(id) {
-	$("cmd").hidden = true;
-	$(id).hidden = false;
-	for (var i = 0; i < divList.length; i++)
-		if (divList[i] != id)
-			$(divList[i]).hidden = true;
-}
-
-//Update
-function update() {
-	//Prevent self effect by insert content.
-	if ($("cmd").attributes["name"].value == "insert")
-		$("cmd").id = null;
-	//Change view.
-	if (!flag) {
-		showDiv("cmd");
-		return;
-	}
-	//Autoshout.
-	if (autoShout)
-		words = insert;
-	else
-		words = "";
-	//Main
-	if ($("move")) {
-		showDiv("myMain");
-		
-		//Move
-		var places = $("cmd").getElementsByTagName("select")[0].children;
-		for (var i = 0; i < moveList.length; i++) 
-			$("move" + i).hidden = true;
-		for (var i = 1; i < places.length; i++)
-			$("move" + places[i].value).hidden = false;
-
-		//Items
-		for (var i = 1; i <= 5; i++)
-			if ($("itm" + i)) {
-				$("item" + i).innerHTML = $("itm" + i).nextSibling.text.slice(0, -3);
-				$("item" + i).hidden = false;
-			}
-			else
-				$("item" + i).hidden = true;
-	}
-	//Attack
-	else if ($("cmd").elements[0].name == "message") {
-		showDiv("myAttack");
-		$("attack").wid = $("cmd").elements[2].value;
-		$("attack").kind = $("cmd").elements[3].value;
-	}
-	//Pick
-	else if ($("itemget")) {
-		showDiv("myPick");
-		if ($("message").firstElementChild)
-			$("message").removeChild($("message").firstElementChild);
-		$("message").appendChild($("cmd").getElementsByClassName("yellow")[0]);
-	}
-	//Corpse
-	else if ($("cmd").elements[0].value == "corpse") {
-		showDiv("myCorpse");
-		$("myCorpse").wid = $("cmd").elements[1].value;
-		for (var i = 0; i < corpseList.length; i++)
-			if ($(corpseList[i])) {
-				$("m" + corpseList[i]).innerHTML = $(corpseList[i]).nextSibling.text;
-				$("m" + corpseList[i]).hidden = false;
-			}
-			else
-				$("m" + corpseList[i]).hidden = true;
-	}
-	//Swap
-	else if ($("swapitm1")) {
-		showDiv("mySwap");
-		for (var i = 0; i <=5; i++)
-			$("mySwap").getElementsByTagName("button")[i].innerHTML =
-				$("cmd").getElementsByTagName("a")[i].text;
-	}
-	//Rest
-	else if ($("rest"))
-		showDiv("myHeal");
-	else {
-		showDiv("cmd");
-		$("submit").onclick = function() {
-			myPost(getRequestBody(document.forms['cmd']));
-			return false;
-		}
-	}
-	autoPost();
-}
-
-function autoPost() {
-	if (!$("myAttack").hidden && $("autoAttack").value) {
-		$("attack").onclick();
-		return;
-	}
-}
-
 //Post request and deal with the response.
 function myPost(command) {
 	var request = new XMLHttpRequest();
@@ -300,10 +201,19 @@ function myPost(command) {
 			if (request.status == 200) {
 				showGamedata(request.responseText);
 				update();
+				autoPost();
 			}
 			else 
 				showNotice(request.statusText);
 		}
 	};
 	request.send(command);
+}
+
+//Conditions of autoPost
+function autoPost() {
+	if (!$("myAttack").hidden && $("autoAttack").value) {
+		$("attack").onclick();
+		return;
+	}
 }
