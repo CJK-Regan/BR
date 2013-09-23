@@ -1,6 +1,6 @@
 //Configurations
-var flag = true;       //Flag that indicates whether to use new view of not
-var autoAttack = true; //Automatically actively fight.
+var flag = true;
+var autoAttack = true;
 var words = "";
 
 //Static lists
@@ -26,7 +26,7 @@ function createConfigBar(config, name, id, func) {
 	a.value = config;
 	if (config)
 		a.style.color = "green";
-	a.innerHTML = "<" + name + ">";
+	a.innerHTML = name;
 	a.id = id || null;
 	a.onclick = function() {
 		this.value = !this.value;
@@ -53,8 +53,7 @@ function createConfigBar(config, name, id, func) {
 		update();
 	}
 	headerlink.appendChild(flagLink);
-	headerlink.appendChild(document.createElement("br"));
-	headerlink.appendChild(createConfigBar(autoAttack, "自动攻击", "autoAttack"));
+	headerlink.appendChild(createConfigBar(autoAttack, ">>自动攻击", "autoAttack"));
 })();
 
 //Div structure

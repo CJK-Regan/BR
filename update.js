@@ -7,6 +7,8 @@ function showDiv(id) {
 }
 
 function update() {
+	if ($("shout"))
+		$("shout").hidden = true;
 	if (!flag) {
 		showDiv("cmd");
 		return;
