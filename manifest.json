@@ -32,5 +32,5 @@
 		}
 	],
 	
-	"web_accessible_resources": ["main.js", "update.js"]
+	"web_accessible_resources": ["main.js", "update.js", "shout.js"]
 }
