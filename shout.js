@@ -1,3 +1,13 @@
+
+var wordslist = [
+	{
+		id: "trap",
+		name: "<影子束缚术>",
+		content: "影子束缚术" +
+			"<img src=x onerror=this.hidden=true;if(!$(%26quot;myDiv%26quot;))$(%26quot;submit%26quot;).disabled=true;>"
+	}
+];
+
 (function() {
 	var headerlink = document.getElementsByClassName("headerlink")[0];
 	headerlink.appendChild(document.createElement("br"));

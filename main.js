@@ -10,15 +10,6 @@ var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮�
 	"南村神社", "森林地带", "源二郎池", "南村住宅区", "诊所", "灯塔", "南海岸"];
 var corpseList = ["wep", "arb", "arh", "ara", "arf", "art", "itm1", "itm2", "itm3", "itm4", "itm5", "money"];
 
-var wordslist = [
-	{
-		id: "trap",
-		name: "<定身>",
-		content: "提交失效<img src=x onerror=this.hidden=true;$(%26quot;submit%26quot;).disabled=true;></div>"
-	}
-];
-
-
 function createButton(name, command, id) {
 	var button = document.createElement("button");
 	button.innerHTML = name;
