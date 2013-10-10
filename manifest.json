@@ -29,10 +29,6 @@
 				"http://br.265g.com/help.php"
 			],
 			"js": ["others.js"]
-		},
-		{
-			"matches": ["http://br.265g.com/valid.php"],
-			"js": ["valid.js"]
 		}
 	],
 	
