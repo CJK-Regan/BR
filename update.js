@@ -1,90 +1,90 @@
 function showDiv(id) {
-	$("cmd").hidden = true;
-	$(id).hidden = false;
+	$id("cmd").hidden = true;
+	$id(id).hidden = false;
 	for (var i = 0; i < divList.length; i++)
 		if (divList[i] != id)
-			$(divList[i]).hidden = true;
+			$id(divList[i]).hidden = true;
 }
 
 function update() {
-	if ($("shout"))
-		$("shout").hidden = true;
+	if ($id("shout"))
+		$id("shout").hidden = true;
 	if (!flag) {
 		showDiv("cmd");
 		return;
 	}
 
 	//Main
-	if ($("move")) {
+	if ($id("move")) {
 		showDiv("myMain");
 		
 		//Move
-		var places = $("cmd").getElementsByTagName("select")[0].children;
+		var places = $id("cmd").getElementsByTagName("select")[0].children;
 		for (var i = 0; i < moveList.length; i++) 
-			$("move" + i).hidden = true;
+			$id("move" + i).hidden = true;
 		for (var i = 1; i < places.length; i++)
-			$("move" + places[i].value).hidden = false;
+			$id("move" + places[i].value).hidden = false;
 
 		//Items
 		for (var i = 1; i <= 5; i++)
-			if ($("itm" + i)) {
-				$("item" + i).innerHTML = $("itm" + i).nextSibling.text.slice(0, -3);
-				$("item" + i).hidden = false;
+			if ($id("itm" + i)) {
+				$id("item" + i).innerHTML = $id("itm" + i).nextSibling.text.slice(0, -3);
+				$id("item" + i).hidden = false;
 			}
 			else
-				$("item" + i).hidden = true;
+				$id("item" + i).hidden = true;
 
 		return;
 	}
 
 	//Attack
-	if ($("cmd").elements[0].name == "message") {
+	if ($id("cmd").elements[0].name == "message") {
 		showDiv("myAttack");
-		$("attack").wid = $("cmd").elements[2].value;
-		$("attack").kind = $("cmd").elements[3].value;
+		$id("attack").wid = $id("cmd").elements[2].value;
+		$id("attack").kind = $id("cmd").elements[3].value;
 		return;
 	}
 
 	//Pick
-	if ($("itemget")) {
+	if ($id("itemget")) {
 		showDiv("myPick");
-		if ($("message").firstElementChild)
-			$("message").removeChild($("message").firstElementChild);
-		$("message").appendChild($("cmd").getElementsByClassName("yellow")[0]);
+		if ($id("message").firstElementChild)
+			$id("message").removeChild($id("message").firstElementChild);
+		$id("message").appendChild($id("cmd").getElementsByClassName("yellow")[0]);
 		return;
 	}
 
 	//Corpse
-	if ($("cmd").elements[0].value == "corpse") {
+	if ($id("cmd").elements[0].value == "corpse") {
 		showDiv("myCorpse");
-		$("myCorpse").wid = $("cmd").elements[1].value;
+		$id("myCorpse").wid = $id("cmd").elements[1].value;
 		for (var i = 0; i < corpseList.length; i++)
-			if ($(corpseList[i])) {
-				$("m" + corpseList[i]).innerHTML = $(corpseList[i]).nextSibling.text;
-				$("m" + corpseList[i]).hidden = false;
+			if ($id(corpseList[i])) {
+				$id("m" + corpseList[i]).innerHTML = $id(corpseList[i]).nextSibling.text;
+				$id("m" + corpseList[i]).hidden = false;
 			}
 			else
-				$("m" + corpseList[i]).hidden = true;
+				$id("m" + corpseList[i]).hidden = true;
 		return;
 	}
 
 	//Swap
-	if ($("swapitm1")) {
+	if ($id("swapitm1")) {
 		showDiv("mySwap");
 		for (var i = 0; i <=5; i++)
-			$("mySwap").getElementsByTagName("button")[i].innerHTML =
-				$("cmd").getElementsByTagName("a")[i].text;
+			$id("mySwap").getElementsByTagName("button")[i].innerHTML =
+				$id("cmd").getElementsByTagName("a")[i].text;
 		return;
 	}
 
 	//Rest
-	if ($("rest")) {
+	if ($id("rest")) {
 		showDiv("myHeal");
 		return;
 	}
 
 	showDiv("cmd");
-	$("submit").onclick = function() {
+	$id("submit").onclick = function() {
 		myPost(getRequestBody(document.forms['cmd']));
 		return false;
 	}

@@ -15,4 +15,4 @@ function insertJS(fileName) {
 
 insertJS("update.js");
 insertJS("main.js");
-insertJS("shout.js");
+//insertJS("shout.js");

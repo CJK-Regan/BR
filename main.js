@@ -10,6 +10,8 @@ var moveList = ["分校", "北海岸", "北村住宅区", "北村公所", "邮�
 	"南村神社", "森林地带", "源二郎池", "南村住宅区", "诊所", "灯塔", "南海岸"];
 var corpseList = ["wep", "arb", "arh", "ara", "arf", "art", "itm1", "itm2", "itm3", "itm4", "itm5", "money"];
 
+function $id(id) { return document.getElementById(id); }
+
 function createButton(name, command, id) {
 	var button = document.createElement("button");
 	button.innerHTML = name;
@@ -59,7 +61,7 @@ function createConfigBar(config, name, id, func) {
 (function() {
 	//Root node 
 	var div = document.createElement("div");
-	$("cmd").parentElement.appendChild(div);
+	$id("cmd").parentElement.appendChild(div);
 	div.id = "myDiv";
 	for (var i = 0; i < divList.length; i++) {
 		div.appendChild(document.createElement("div"));
@@ -67,7 +69,7 @@ function createConfigBar(config, name, id, func) {
 	}
 
 	//Main
-	var myMain = $("myMain");
+	var myMain = $id("myMain");
 	for (var i = 0; i < 3; i++) {
 		myMain.appendChild(document.createElement("div"));
 		myMain.lastChild.style.border = "1px solid";
@@ -77,7 +79,7 @@ function createConfigBar(config, name, id, func) {
 	myMain.children[2].id = "myActions";
 
 	//Move
-	var myMove = $("myMove");
+	var myMove = $id("myMove");
 	myMove.align = "center";
 	var title_move = document.createElement("p");
 	title_move.innerHTML = "移动";
@@ -86,7 +88,7 @@ function createConfigBar(config, name, id, func) {
 		myMove.appendChild(createButton(moveList[i], "'mode=command&command=move&moveto=" + i + "'", "move" + i));
 	
 	//Items
-	var myItems = $("myItems");
+	var myItems = $id("myItems");
 	myItems.align = "center";
 	var title_items = document.createElement("p");
 	title_items.innerHTML = "物品";
@@ -95,7 +97,7 @@ function createConfigBar(config, name, id, func) {
 		myItems.appendChild(createButton(null, "'mode=command&command=itm" + i + "'", "item" + i));
 	
 	//Actions
-	var myActions = $("myActions");
+	var myActions = $id("myActions");
 	myActions.align = "center";
 	
 	var title_actions = document.createElement("p");
@@ -106,6 +108,7 @@ function createConfigBar(config, name, id, func) {
 	myActions.appendChild(createButton("商店", "'mode=command&command=special&sp_cmd=sp_shop'"));
 	myActions.appendChild(createButton("合成", "'mode=command&command=itemmain&itemcmd=itemmix'"));
 	myActions.appendChild(createButton("验毒", "'mode=command&command=special&sp_cmd=sp_poison'"));
+	myActions.appendChild(createButton("精炼", "'mode=command&command=special&sp_cmd=sp_wqjl'"));
 	myActions.appendChild(createButton("整理", "'mode=command&command=itemmain&itemcmd=itemmerge'"));
 	myActions.appendChild(createButton("卸兵", "'mode=itemmain&command=offwep'"));
 
@@ -134,9 +137,10 @@ function createConfigBar(config, name, id, func) {
 	myActions.appendChild(createButton("头", "'mode=special&command=infh'"));
 	myActions.appendChild(createButton("腕", "'mode=special&command=infa'"));
 	myActions.appendChild(createButton("足", "'mode=special&command=inff'"));
+	myActions.appendChild(createButton("虚", "'mode=special&command=infw'"));
 
 	//Attack
-	var myAttack = $("myAttack");
+	var myAttack = $id("myAttack");
 	myAttack.appendChild(document.createElement("br"));
 	myAttack.appendChild(createButton("攻击",
 				"'mode=combat&message=' + words + '&wid=' + this.wid + '&command=' + this.kind", 
@@ -145,7 +149,7 @@ function createConfigBar(config, name, id, func) {
 	myAttack.appendChild(createButton("逃跑", "'mode=combat&command=back'"));
 	
 	//Pick
-	var myPick = $("myPick");
+	var myPick = $id("myPick");
 	var message = document.createElement("div");
 	message.id = "message";
 	message.innerHTML = "发现物品：";
@@ -157,11 +161,11 @@ function createConfigBar(config, name, id, func) {
 	myPick.appendChild(createButton("丢弃", "'mode=itemmain&command=dropitm0'"));
 	
 	//Corpse
-	var myCorpse = $("myCorpse");	
+	var myCorpse = $id("myCorpse");	
 	myCorpse.appendChild(document.createElement("br"));
 	for (var i = 0; i < corpseList.length; i++) {
 		myCorpse.appendChild(createButton(null,
-					"'mode=corpse&wid=' + $('myCorpse').wid + '&command=" + corpseList[i] + "'",
+					"'mode=corpse&wid=' + $id('myCorpse').wid + '&command=" + corpseList[i] + "'",
 					"m" + corpseList[i]));
 		myCorpse.appendChild(document.createElement("br"));
 	}
@@ -169,14 +173,14 @@ function createConfigBar(config, name, id, func) {
 	myCorpse.appendChild(createButton("返回", "'mode=corpse&command=menu'"));
 	
 	//Heal
-	var myHeal = $("myHeal");	
+	var myHeal = $id("myHeal");	
 	myHeal.appendChild(document.createElement("br"));
 	myHeal.appendChild(createButton("静养", "'mode=rest&command=rest'"));
 	myHeal.appendChild(document.createElement("br"));
 	myHeal.appendChild(createButton("返回", "'mode=rest&command=back'"));
 	
 	//Swap
-	var mySwap = $("mySwap");
+	var mySwap = $id("mySwap");
 	mySwap.appendChild(document.createElement("br"));
 	mySwap.appendChild(createButton(null, "'mode=itemmain&command=dropitm0'"));
 	mySwap.appendChild(document.createElement("br"));
@@ -210,8 +214,8 @@ function myPost(command) {
 
 //Conditions of autoPost
 function autoPost() {
-	if (!$("myAttack").hidden && $("autoAttack").value) {
-		$("attack").onclick();
+	if (!$id("myAttack").hidden && $id("autoAttack").value) {
+		$id("attack").onclick();
 		return;
 	}
 }
